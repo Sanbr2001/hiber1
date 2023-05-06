@@ -33,7 +33,7 @@ public class Main {
         userService.createUsersTable();
         userService.saveUser(testName, testLastName, testAge);
         if (userService.getAllUsers().size() != 1) {
-            Assert.fail("Проверьте корректность работы метода сохранения пользователя/удаления или создания таблиц");
+            Assert.fail("Проверьте корректность работы метода сохранения пользователя/удаления или создания таблицы");
         }
 
 
