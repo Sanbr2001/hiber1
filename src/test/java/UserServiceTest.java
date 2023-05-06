@@ -4,7 +4,7 @@ import jm.task.core.jdbc.service.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.List;
+
 
 public class UserServiceTest {
     private final UserService userService = new UserServiceImpl();
@@ -35,7 +35,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void ФsaveUser() {
+    public void saveUser() {
         try {
             userService.dropUsersTable();
             userService.createUsersTable();
@@ -54,7 +54,19 @@ public class UserServiceTest {
             Assert.fail("Во время тестирования сохранения пользователя произошло исключение\n" + e);
         }
     }
-
+    @Test
+    public void getAllUsers() {
+        try {
+            userService.dropUsersTable();
+            userService.createUsersTable();
+            userService.saveUser(testName, testLastName, testAge);
+            if (userService.getAllUsers().size() != 1) {
+                Assert.fail("Проверьте корректность работы метода сохранения пользователя/удаления или создания таблицы");
+            }
+        } catch (Exception e) {
+            Assert.fail("При попытке достать всех пользователей из базы данных произошло исключение\n" + e);
+        }
+    }
     @Test
     public void removeUserById() {
         try {
@@ -67,21 +79,7 @@ public class UserServiceTest {
         }
     }
 
-    @Test
-    public void getAllUsers() {
-        try {
-            userService.dropUsersTable();
-            userService.createUsersTable();
-            userService.saveUser(testName, testLastName, testAge);
-            List<User> userList = userService.getAllUsers();
 
-            if (userList.size() != 1) {
-                Assert.fail("Проверьте корректность работы метода сохранения пользователя/удаления или создания таблицы");
-            }
-        } catch (Exception e) {
-            Assert.fail("При попытке достать всех пользователей из базы данных произошло исключение\n" + e);
-        }
-    }
 
     @Test
     public void cleanUsersTable() {
